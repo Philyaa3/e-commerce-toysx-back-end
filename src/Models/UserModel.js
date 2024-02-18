@@ -21,7 +21,48 @@ const userSchema = mongoose.Schema(
                 type: String,
                 ref: "Role"
             }
-        ]
+        ],
+        cart: {
+            type: String,
+            ref: 'Cart',
+        },
+        wishlist: {
+            type: String,
+            ref: 'Wishlist',
+        },
+        preference: {
+            categoryPreference: {
+                type: Map,
+                of: Number,
+                default: {}
+            },
+            productPreference: [
+                {
+                    altText: {
+                        type: String,
+                        required: true
+                    },
+                    visitCount: {
+                        type: Number,
+                        default: 0
+                    },
+                    priceRange: {
+                        min: {
+                            type: Number,
+                            default: 0
+                        },
+                        max: {
+                            type: Number,
+                            default: 0
+                        }
+                    },
+                    interestType: {
+                        type: String,
+                        default: ''
+                    }
+                }
+            ]
+        },
     },
     {
         timestamps: true,

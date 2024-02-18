@@ -6,6 +6,7 @@ const productSchema = new mongoose.Schema({
     },
     isLiked:{
         type: Boolean,
+        default: false,
     },
     heading: {
         type: String,
@@ -48,6 +49,9 @@ const productSchema = new mongoose.Schema({
             },
         },
     ],
+    matchScore: {
+        type: Number,
+    }
 });
 
 const ProductModel = mongoose.model('Product', productSchema);

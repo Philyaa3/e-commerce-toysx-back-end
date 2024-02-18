@@ -7,6 +7,7 @@ import productRoutes from "./Routes/ProductRoutes.js";
 import authRoutes from "./Routes/authRoutes.js";
 import propertiesRoute from "./Routes/PropertiesRoute.js";
 import {fileURLToPath} from "url";
+import preferenceRouter from "./Routes/UserPreference.js";
 
 dotenv.config();
 connectDatabase();
@@ -23,6 +24,8 @@ app.use('/uploads', express.static(join(__dirname, 'uploads')));
 app.use('/api/products', productRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api', propertiesRoute);
+app.use('/api/user/preference', preferenceRouter);
+
 
 const PORT = process.env.PORT || 1000;
 app.listen(PORT, () => {
