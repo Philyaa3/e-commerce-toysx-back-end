@@ -1,11 +1,9 @@
 import express from 'express';
 import ProductModel from '../models/ProductModel.js';
-import requireAuth from "../Middlewares/authMiddleware.js";
 import multer from "multer";
 import mongoose from "mongoose";
 import {v4 as uuidv4} from 'uuid';
 import User from "../Models/UserModel.js";
-import {normalizeType} from "express/lib/utils.js";
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -57,7 +55,7 @@ router.get('/:id', async (req, res) => {
 
 
 // Add a new product
-router.post('/', requireAuth, upload.array('imagePath', 5), async (req, res) => {
+router.post('/', upload.array('imagePath', 5), async (req, res) => {
     try {
         console.log('Request Body:', req.body);  // Log the request body
         const {heading, altText, oldPrice, price, inStock, category, properties} = req.body;
@@ -91,7 +89,7 @@ router.post('/', requireAuth, upload.array('imagePath', 5), async (req, res) => 
 
 
 // Update a product by ID
-router.put('/:id', requireAuth, async (req, res) => {
+router.put('/:id', async (req, res) => {
     try {
         // Check if req.params.id is not a valid ObjectId
         if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
@@ -143,7 +141,7 @@ router.post('/updateIsLiked/:id', async (req, res) => {
 
 
 // Delete a product by ID
-router.delete('/:id', requireAuth, async (req, res) => {
+router.delete('/:id', async (req, res) => {
     try {
         const deletedProduct = await ProductModel.findByIdAndRemove(req.params.id);
         if (!deletedProduct) {
@@ -165,7 +163,7 @@ const weights = {
 };
 
 // Эндпоинт для получения отфильтрованного массива рекомендуемых продуктов
-router.get('/recommendations/:email', requireAuth, async (req, res) => {
+router.get('/recommendations/:email', async (req, res) => {
     try {
         const {email} = req.params;
 

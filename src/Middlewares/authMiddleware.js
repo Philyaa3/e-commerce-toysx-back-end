@@ -1,15 +1,9 @@
-import jwt from "jsonwebtoken";
+const attachIPToSession = (req, res, next) => {
+    // Получаем IP-адрес пользователя
+    const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    // Устанавливаем IP-адрес в сессии
+    req.session.ip = ip;
+    next();
+};
 
-export default function (req, res, next) {
-    if (req.method === "OPTIONS")
-        next()
-    try {
-        const token = req.headers.authorization.split(' ')[1]
-        if (!token)
-            return res.status(403).json({message: "User unauthorized"})
-        req.user = jwt.verify(token, process.env.JWT_SECRET)
-        next()
-    } catch (e) {
-        return res.status(403).json({message: "User unauthorized"})
-    }
-}
+export default attachIPToSession;

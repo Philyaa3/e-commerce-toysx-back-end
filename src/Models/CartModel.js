@@ -16,7 +16,7 @@ const cartSchema = mongoose.Schema(
         email: {
             type: String,
             ref: 'User',
-            required: true,
+            required: false,
         },
         items: [itemSchema],
     },

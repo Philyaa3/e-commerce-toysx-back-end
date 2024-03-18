@@ -1,12 +1,11 @@
 import express from 'express';
-import requireAuth from "../Middlewares/authMiddleware.js";
 
 
 const router = express.Router();
 
 // Properties setting
 
-router.get('/predefinedKeys', requireAuth, (req, res) => {
+router.get('/predefinedKeys', (req, res) => {
     const predefinedKeys = [
         'Color',
         'Manufacturer',
